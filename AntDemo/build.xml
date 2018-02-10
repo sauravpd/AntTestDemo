@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="antSampleProject" default="run" basedir=".">
+
+	<target name="clean">
+		<delete dir="bin" />
+	</target>
+
+	<target name="create" depends="clean">
+		<mkdir dir="bin" />
+	</target>
+
+	<path id="classpath">
+		<path location="lib">
+			<fileset dir="lib" includes="*.jar" />
+		</path>
+		<path location="bin" />
+	</path>
+
+
+	<target name="compile" depends="create">
+		<javac classpathref="classpath" includeantruntime="true" srcdir="src" destdir="bin">
+		</javac>
+	</target>
+
+	<taskdef name="testng" classname="org.testng.TestNGAntTask" classpathref="classpath" />
+
+	<target name="run" depends="compile">
+		<testng classpathref="classpath" haltOnfailure="true">
+			<xmlfileset dir="." includes="testng.xml" />
+		</testng>
+	</target>
+
+</project>
